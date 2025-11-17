@@ -3,11 +3,16 @@ version: 0.2
 phases:
   install:
     commands:
-      - echo "Installing dependencies..."
-      - npm install
+      - echo "Installing dependencies if package.json exists..."
+      - |
+        if [ -f package.json ]; then
+          npm install
+        else
+          echo "No package.json found, skip npm install"
+        fi
   build:
     commands:
-      - echo "Building Lambda artifact..."
+      - echo "Zipping Lambda artifact..."
       - zip -r artifact.zip .
 
 artifacts:
